@@ -1,9 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 export default function ChaosPage() {
   const [showFlash, setShowFlash] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
     // Flash the inder-g.png every few seconds
@@ -15,10 +17,22 @@ export default function ChaosPage() {
     return () => clearInterval(flashInterval)
   }, [])
 
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause()
+        setIsPlaying(false)
+      } else {
+        audioRef.current.play()
+        setIsPlaying(true)
+      }
+    }
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-pink-500 via-purple-500 to-cyan-500 animate-gradient">
       {/* Background Audio */}
-      <audio autoPlay loop>
+      <audio ref={audioRef}>
         <source
           src="https://storage.googleapis.com/random-mehkri/maazinderurvasighani.mp3"
           type="audio/mpeg"
@@ -315,11 +329,14 @@ export default function ChaosPage() {
       </a>
 
       {/* Volume Warning in Center */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none">
+      <div
+        onClick={toggleAudio}
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-auto cursor-pointer hover:scale-110 transition-transform"
+      >
         <div className="flex flex-col items-center gap-4 bg-gradient-to-r from-red-600 via-yellow-500 to-red-600 p-8 rounded-3xl border-8 border-white shadow-[0_0_60px_rgba(255,0,0,1)] animate-pulse">
-          <div className="text-9xl animate-wiggle">🔊</div>
+          <div className="text-9xl animate-wiggle">{isPlaying ? "🔊" : "🔇"}</div>
           <div className="text-6xl font-black text-white drop-shadow-[0_0_20px_rgba(0,0,0,1)] animate-bounce text-center">
-            PUT ON VOLUME SAAR
+            {isPlaying ? "PLAYING SAAR" : "CLICK TO PLAY SAAR"}
           </div>
           <div className="flex gap-2 animate-blink">
             <span className="text-5xl">🔊</span>
