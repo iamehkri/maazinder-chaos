@@ -20,7 +20,7 @@ export default function ChaosPage() {
       {/* Background Audio */}
       <audio autoPlay loop>
         <source
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Maazinder%20Ghani-yy1rSMtC4kRPFNV22gCiJpQ8ZG34kb.mp3"
+          src="https://storage.googleapis.com/random-mehkri/maazinderurvasighani.mp3"
           type="audio/mpeg"
         />
       </audio>
